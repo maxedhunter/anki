@@ -1,15 +1,20 @@
 package cs3500.pa01;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Represents Driver tests.
+ */
 class DriverTest {
 
+  /**
+   * Tests exceptions in the main class.
+   */
   @Test
-  public void fakeTest() {
-    System.out.println("An important message...");
-    assertEquals(5, 5);
+  public void testMain() {
+    assertThrows(IllegalArgumentException.class,
+        () -> Driver.main(new String[] {}));
   }
-
 }
