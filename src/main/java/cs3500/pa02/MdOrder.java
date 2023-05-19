@@ -1,4 +1,4 @@
-package cs3500.pa01;
+package cs3500.pa02;
 
 import java.io.IOException;
 import java.nio.file.Files;
