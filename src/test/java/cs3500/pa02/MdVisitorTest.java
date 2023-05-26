@@ -35,7 +35,7 @@ class MdVisitorTest {
 
     ArrayList<Path> actualFiles = mdv.getMds();
 
-    assertEquals(3, actualFiles.size());
+    assertEquals(5, actualFiles.size());
     // assertArrayEquals(expectedFiles.toArray(), actualFiles.toArray());
   }
 
