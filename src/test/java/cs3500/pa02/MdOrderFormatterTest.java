@@ -4,6 +4,7 @@ package cs3500.pa02;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import cs3500.pa02.studysession.Question;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,8 +14,9 @@ import org.junit.jupiter.api.Test;
 /**
  * Represents test for ordering markdown files.
  */
-class MdOrderTest {
+class MdOrderFormatterTest {
   static final String SAMPLE_INPUTS_DIRECTORY = "src/test/resources/sampleFiles";
+  static final String SAMPLE_INPUTS_DIRECTORY2 = "src/test/resources/sampleFiles/questionFiles";
 
   ArrayList<Path> unsorted = new ArrayList<>();
   ArrayList<String> expectedResultString = new ArrayList<>();
@@ -52,13 +54,13 @@ class MdOrderTest {
    */
   @Test
   void testGetOrderedContent() {
-    MdOrder mdOrder = new MdOrder();
-    assertThrows(IllegalStateException.class, () -> mdOrder.getOrderedContent());
+    MdOrderFormatter mdOrderFormatter = new MdOrderFormatter();
+    assertThrows(IllegalStateException.class, () -> mdOrderFormatter.getOrderedContent());
 
 
-    mdOrder.orderContent(unsorted, OrderingFlag.FILENAME);
+    mdOrderFormatter.orderContent(unsorted, OrderingFlag.FILENAME);
 
-    assertEquals(expectedResultString, mdOrder.getOrderedContent());
+    assertEquals(expectedResultString, mdOrderFormatter.getOrderedContent());
   }
 
   /**
@@ -70,9 +72,9 @@ class MdOrderTest {
     expectedFiles.add(Path.of(SAMPLE_INPUTS_DIRECTORY + "/arrays.md"));
     expectedFiles.add(Path.of(SAMPLE_INPUTS_DIRECTORY + "/vectors.md"));
 
-    MdOrder mdOrder = new MdOrder();
+    MdOrderFormatter mdOrderFormatter = new MdOrderFormatter();
 
-    assertEquals(expectedFiles, mdOrder.orderPath(unsorted, OrderingFlag.FILENAME));
+    assertEquals(expectedFiles, mdOrderFormatter.orderPath(unsorted, OrderingFlag.FILENAME));
   }
 
   /**
@@ -84,10 +86,11 @@ class MdOrderTest {
     expectedFiles.add(Path.of(SAMPLE_INPUTS_DIRECTORY + "/arrays.md"));
     expectedFiles.add(Path.of(SAMPLE_INPUTS_DIRECTORY + "/vectors.md"));
 
-    MdOrder mdOrder = new MdOrder();
-    assertEquals(expectedFiles, mdOrder.orderPath(expectedFiles, OrderingFlag.CREATED));
+    MdOrderFormatter mdOrderFormatter = new MdOrderFormatter();
+    assertEquals(expectedFiles, mdOrderFormatter.orderPath(expectedFiles, OrderingFlag.CREATED));
 
-    assertThrows(RuntimeException.class, () -> mdOrder.orderPath(badFiles, OrderingFlag.CREATED));
+    assertThrows(RuntimeException.class,
+        () -> mdOrderFormatter.orderPath(badFiles, OrderingFlag.CREATED));
   }
 
   /**
@@ -99,10 +102,11 @@ class MdOrderTest {
     expectedFiles.add(Path.of(SAMPLE_INPUTS_DIRECTORY + "/vectors.md"));
     expectedFiles.add(Path.of(SAMPLE_INPUTS_DIRECTORY + "/arrays.md"));
 
-    MdOrder mdOrder = new MdOrder();
+    MdOrderFormatter mdOrderFormatter = new MdOrderFormatter();
 
-    assertEquals(expectedFiles, mdOrder.orderPath(expectedFiles, OrderingFlag.MODIFIED));
-    assertThrows(RuntimeException.class, () -> mdOrder.orderPath(badFiles, OrderingFlag.MODIFIED));
+    assertEquals(expectedFiles, mdOrderFormatter.orderPath(expectedFiles, OrderingFlag.MODIFIED));
+    assertThrows(RuntimeException.class,
+        () -> mdOrderFormatter.orderPath(badFiles, OrderingFlag.MODIFIED));
   }
 
   /**
@@ -110,11 +114,45 @@ class MdOrderTest {
    */
   @Test
   void testOrderContent() {
-    MdOrder mdOrder = new MdOrder();
+    MdOrderFormatter mdOrderFormatter = new MdOrderFormatter();
     ArrayList<Path> expectedFiles = new ArrayList<>();
     expectedFiles.add(Path.of(SAMPLE_INPUTS_DIRECTORY + "/arrays.md"));
     expectedFiles.add(Path.of(SAMPLE_INPUTS_DIRECTORY + "/vectors.md"));
 
-    assertEquals(expectedResultString, mdOrder.orderContent(expectedFiles, OrderingFlag.FILENAME));
+    assertEquals(expectedResultString,
+        mdOrderFormatter.orderContent(expectedFiles, OrderingFlag.FILENAME));
+  }
+
+  /**
+   * Tests getting questions from an arraylist of paths.
+   */
+  @Test
+  void testGetQuestions() {
+    MdOrderFormatter mdOrderFormatter = new MdOrderFormatter();
+    ArrayList<Path> questionFiles = new ArrayList<>();
+    questionFiles.add(Path.of(SAMPLE_INPUTS_DIRECTORY2 + "/questions1.md"));
+    questionFiles.add(Path.of(SAMPLE_INPUTS_DIRECTORY2 + "/questions2.md"));
+
+    ArrayList<Question> actualQuestions = mdOrderFormatter.getQuestions(questionFiles);
+
+    assertEquals(3, actualQuestions.size());
+
+    String question = actualQuestions.get(0).getQuestion();
+    String answer = actualQuestions.get(0).getAnswer();
+
+    assertEquals("here's a question", question);
+    assertEquals("yup", answer);
+
+    String question1 = actualQuestions.get(1).getQuestion();
+    String answer1 = actualQuestions.get(1).getAnswer();
+
+    assertEquals("here's a second question", question1);
+    assertEquals("thanks", answer1);
+
+    String question2 = actualQuestions.get(2).getQuestion();
+    String answer2 = actualQuestions.get(2).getAnswer();
+
+    assertEquals("a third?", question2);
+    assertEquals("no way", answer2);
   }
 }

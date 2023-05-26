@@ -1,5 +1,6 @@
 package cs3500.pa02;
 
+import cs3500.pa02.studysession.Question;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,8 +14,10 @@ import java.util.Comparator;
  * Represents properly ordering the output
  * based off of the passed OrderingFlag.
  */
-public class MdOrder {
-  private ArrayList<String> orderedContent = new ArrayList<>();
+public class MdOrderFormatter {
+  private final ArrayList<String> orderedContent = new ArrayList<>();
+  private final ArrayList<Question> questions = new ArrayList<>();
+
   private boolean ordered = false;
 
   /**
@@ -101,5 +104,22 @@ public class MdOrder {
       }
     }
     return orderedContent;
+  }
+
+  /**
+   * @param paths paths to search for questions
+   * @return a list of questions
+   */
+  public ArrayList<Question> getQuestions(ArrayList<Path> paths) {
+    for (Path path : paths) {
+      FileHandler fileHandler = new FileHandler();
+
+      Path p = path;
+      fileHandler.createContent(p);
+      ArrayList<Question> temp = fileHandler.getQuestions();
+      questions.addAll(temp);
+    }
+
+    return questions;
   }
 }

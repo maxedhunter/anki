@@ -70,4 +70,13 @@ public class Question {
   public QuestionLabel getLabel() {
     return difficulty;
   }
+
+  /**
+   *
+   *
+   * @return string format of a question
+   */
+  public String toString() {
+    return question + "|" + answer + "|" + difficulty.toString();
+  }
 }

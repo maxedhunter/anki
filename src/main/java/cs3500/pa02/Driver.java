@@ -16,7 +16,7 @@ public class Driver {
    */
   public static void main(String[] args) {
     MdVisitor mdVisitor = new MdVisitor();
-    MdOrder mdOrder = new MdOrder();
+    MdOrderFormatter mdOrderFormatter = new MdOrderFormatter();
 
     // if the argument length is correct
     if (args.length >= 3) {
@@ -27,7 +27,7 @@ public class Driver {
       }
 
       ArrayList<Path> paths = mdVisitor.getMds();
-      ArrayList<String> orderedContent = mdOrder.orderContent(paths, OrderingFlag.valueOf(args[1]));
+      ArrayList<String> orderedContent = mdOrderFormatter.orderContent(paths, OrderingFlag.valueOf(args[1]));
 
       MdWriter mdWriter = new MdWriter(args[2]);
       mdWriter.writeToFile(orderedContent);
