@@ -27,7 +27,8 @@ public class Driver {
       }
 
       ArrayList<Path> paths = mdVisitor.getMds();
-      ArrayList<String> orderedContent = mdOrderFormatter.orderContent(paths, OrderingFlag.valueOf(args[1]));
+      ArrayList<String> orderedContent =
+          mdOrderFormatter.orderContent(paths, OrderingFlag.valueOf(args[1]));
 
       MdWriter mdWriter = new MdWriter(args[2]);
       mdWriter.writeToFile(orderedContent);

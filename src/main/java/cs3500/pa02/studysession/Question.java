@@ -72,11 +72,23 @@ public class Question {
   }
 
   /**
-   *
+   * Returns the string in the form of a question
    *
    * @return string format of a question
    */
   public String toString() {
-    return question + "|" + answer + "|" + difficulty.toString();
+    return question + "_" + answer + "|" + difficulty.toString();
+  }
+
+  /**
+   * Compares this question with another one,
+   * returns true if they are the same question.
+   *
+   * @param question question to be compared
+   * @return whether the two questions are the same
+   */
+  public boolean sameQuestion(Question question) {
+    return this.question.equals(question.getQuestion())
+        && this.answer.equals(question.getAnswer()) && this.difficulty.equals(question.getLabel());
   }
 }

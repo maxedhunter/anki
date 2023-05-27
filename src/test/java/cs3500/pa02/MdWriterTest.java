@@ -77,7 +77,7 @@ class MdWriterTest {
     ArrayList<Question> questions = new ArrayList<>(Arrays.asList(q1, q2, q3));
 
     ArrayList<String> expectedContent = new ArrayList<>(
-        Arrays.asList("What's 1 + 1?|2|EASY", "What's 1 + 2?|3|HARD", "What's 1 + 3?|4|HARD"));
+        Arrays.asList("What's 1 + 1?_2|EASY", "What's 1 + 2?_3|HARD", "What's 1 + 3?_4|HARD"));
 
     mdWriter1.writeToFileQuestions(questions);
 
