@@ -19,7 +19,7 @@ class StudySessionModelTest {
    */
   @Test
   void testParseQuestions() {
-    String path = "src/test/resources/example.sr";
+    String path = "src/test/resources/example2.sr";
     StudySessionModel studySessionModel = new StudySessionModel();
 
     ArrayList<Question> questions;
@@ -43,6 +43,41 @@ class StudySessionModelTest {
 
     assertEquals(QuestionLabel.HARD, question1.getLabel());
     assertEquals(QuestionLabel.EASY, question2.getLabel());
+  }
+
+  /**
+   * Tests splitting questions with getHardQuestions and getEasyQuestions.
+   */
+  @Test
+  void testSplitQuestions() {
+    String path = "src/test/resources/example2.sr";
+    StudySessionModel studySessionModel = new StudySessionModel();
+
+    ArrayList<Question> questions;
+
+    try {
+      questions = studySessionModel.parseQuestions(path);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    assertEquals(2, questions.size());
+
+    studySessionModel.splitQuestions();
+    assertEquals(1, studySessionModel.getHardQuestions().size());
+    assertEquals(1, studySessionModel.getEasyQuestions().size());
+
+    Question hardQuestion = studySessionModel.getHardQuestions().get(0);
+    Question easyQuestion = studySessionModel.getEasyQuestions().get(0);
+
+    assertEquals("What does faster shutter speed reduce?", hardQuestion.getQuestion());
+    assertEquals("What is ISO?", easyQuestion.getQuestion());
+
+    assertEquals("Motion blur", hardQuestion.getAnswer());
+    assertEquals("Sensor sensitivity", easyQuestion.getAnswer());
+
+    assertEquals(QuestionLabel.HARD, hardQuestion.getLabel());
+    assertEquals(QuestionLabel.EASY, easyQuestion.getLabel());
   }
 
   /**
@@ -85,7 +120,6 @@ class StudySessionModelTest {
         () -> studySessionModel.stringToQuestion(s2));
 
   }
-
 
   /**
    * Tests exceptions when trying to parse questions.

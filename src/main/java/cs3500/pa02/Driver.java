@@ -1,9 +1,11 @@
 package cs3500.pa02;
 
+import cs3500.pa02.studysession.controller.StudySessionController;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * This is the main driver of this project.
@@ -33,6 +35,13 @@ public class Driver {
       MdWriter mdWriter = new MdWriter(args[2]);
       mdWriter.writeToFile(orderedContent);
 
+    } else if (args.length == 0) {
+      StudySessionController controller = new StudySessionController();
+      try {
+        controller.run(new Scanner(System.in));
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
     } else {
       throw new IllegalArgumentException("Please format the following seperated by whitespace: "
           + "a file path containing markdown notes you would like to summarize, "

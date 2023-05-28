@@ -124,7 +124,7 @@ class MdOrderFormatterTest {
   }
 
   /**
-   * Tests getting questions from an arraylist of paths.
+   * Tests getting the questions.
    */
   @Test
   void testGetQuestions() {

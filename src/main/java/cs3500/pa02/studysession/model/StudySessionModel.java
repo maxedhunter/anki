@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class StudySessionModel {
   ArrayList<Question> studyQuestions = new ArrayList<>();
+  ArrayList<Question> hardQuestions = new ArrayList<>();
+  ArrayList<Question> easyQuestions = new ArrayList<>();
 
   /**
    * Parses all the questions present in a file.
@@ -43,6 +45,37 @@ public class StudySessionModel {
 
     studyQuestions = questions;
     return questions;
+  }
+
+  /**
+   * Splits the questions into hard and easy.
+   */
+  public void splitQuestions() {
+    for (Question q : studyQuestions) {
+      if (q.getLabel().equals(QuestionLabel.HARD)) {
+        hardQuestions.add(q);
+      } else if (q.getLabel().equals(QuestionLabel.EASY)) {
+        easyQuestions.add(q);
+      }
+    }
+  }
+
+  /**
+   * Returns the list of hard questions.
+   *
+   * @return the list of hard questions
+   */
+  public ArrayList<Question> getHardQuestions() {
+    return this.hardQuestions;
+  }
+
+  /**
+   * Returns the list of easy questions.
+   *
+   * @return the list of easy questions
+   */
+  public ArrayList<Question> getEasyQuestions() {
+    return this.easyQuestions;
   }
 
   /**

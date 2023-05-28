@@ -22,6 +22,9 @@ class StudySessionViewTest {
   PrintStream printStream;
   StringBuilder output;
 
+  /**
+   * Sets up input / output testing.
+   */
   @BeforeEach
   void setUp() {
     output = new StringBuilder();

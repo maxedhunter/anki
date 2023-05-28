@@ -70,7 +70,7 @@ class StudySessionWriterTest {
 
     assertThrows(IllegalArgumentException.class,
         () -> studySessionWriter.writeToFile(questions,
-            Path.of("sampleFiles3/thisFileDoesExist.txt")));
+            Path.of("src/test/resources/sampleFiles/vectors.md")));
     assertThrows(IllegalArgumentException.class,
         () -> studySessionWriter.writeToFile(questions,
             Path.of("sampleFiles3/thisFileDoesntExist.txt")));
